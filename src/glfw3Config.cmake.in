@@ -10,13 +10,27 @@ if("@_GLFW_X11@")
   find_package(OpenGL REQUIRED)
 endif()
 
+macro(find_package_framework _ARGS_FRAMEWORK)
+
+    string(TOLOWER "${_ARGS_FRAMEWORK}" _PACKAGE_NAME)
+    set(_TARGET_NAME "${_PACKAGE_NAME}::${_PACKAGE_NAME}")
+
+    if(TARGET ${_TARGET_NAME})
+        return()
+    endif()
+
+    add_library(${_TARGET_NAME} INTERFACE IMPORTED)
+    target_link_libraries(${_TARGET_NAME} INTERFACE "-framework ${_ARGS_FRAMEWORK}")
+
+endmacro()
+
 if("@_GLFW_COCOA@")
-  find_package(appkit REQUIRED)
-  find_package(coredata REQUIRED)
-  find_package(foundation REQUIRED)
-  find_package(iokit REQUIRED)
-  find_package(corefoundation REQUIRED)
-  find_package(corevideo REQUIRED)
+  find_package_framework(appkit REQUIRED)
+  find_package_framework(coredata REQUIRED)
+  find_package_framework(foundation REQUIRED)
+  find_package_framework(iokit REQUIRED)
+  find_package_framework(corefoundation REQUIRED)
+  find_package_framework(corevideo REQUIRED)
 endif()
 
 if("@_GLFW_COCOA@")
