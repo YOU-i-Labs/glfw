@@ -213,14 +213,14 @@ if (UNIX AND NOT APPLE)
     find_library(RT_LIBRARY rt)
     mark_as_advanced(RT_LIBRARY)
     if (RT_LIBRARY)
-        list(APPEND glfw_LIBRARIES "${RT_LIBRARY}")
+        list(APPEND glfw_LIBRARIES "rt")
         list(APPEND glfw_PKG_LIBS "-lrt")
     endif()
 
     find_library(MATH_LIBRARY m)
     mark_as_advanced(MATH_LIBRARY)
     if (MATH_LIBRARY)
-        list(APPEND glfw_LIBRARIES "${MATH_LIBRARY}")
+        list(APPEND glfw_LIBRARIES "m")
         list(APPEND glfw_PKG_LIBS "-lm")
     endif()
 
@@ -258,7 +258,7 @@ if (_GLFW_X11)
 
     # Set up library and include paths
     list(APPEND glfw_INCLUDE_DIRS "${X11_X11_INCLUDE_PATH}")
-    list(APPEND glfw_LIBRARIES "${X11_X11_LIB}" "${CMAKE_THREAD_LIBS_INIT}")
+    list(APPEND glfw_LIBRARIES "X11" "${CMAKE_THREAD_LIBS_INIT}")
 
     # Check for XRandR (modern resolution switching and gamma control)
     if (NOT X11_Xrandr_INCLUDE_PATH)
